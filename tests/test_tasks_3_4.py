@@ -1,4 +1,4 @@
-"""Проверки задач 3–4: python -m unittest tests.test_petr_analysis -v.
+"""Проверки задач 3–4: python -m unittest tests.test_tasks_3_4 -v.
 
 Фикстуры синтетические, задают проверяемые вручную знаменатели и потери.
 Отдельная проверка использует штатный парсер PGN проекта.
@@ -17,7 +17,7 @@ import pandas as pd
 
 from scripts import analyze_blunders as blunders
 from scripts import analyze_speed as speed
-from scripts import petr_analysis_common as common
+from scripts import analysis_common as common
 from scripts import parse_pgn
 from tests.test_parse_pgn import ANALYZED, rows
 
@@ -157,6 +157,42 @@ class AnalysisTests(unittest.TestCase):
             speed.analyze([path], options(self.root))
         with self.assertRaisesRegex(ValueError, "Не найден"):
             common.resolve_inputs([str(self.root / "missing*.csv")])
+
+    def test_duplicates_inside_one_chunk_keep_first(self):
+        path = self.csv("dup.csv", [row("a", result="1-0"), row("a", result="0-1"), row("b"),
+                                    row("a", result="1/2-1/2")])
+        tables, quality = speed.analyze([path], options(self.root, speeds=list(common.SPEEDS), chunksize=10))
+        blitz = tables["speed_summary"].set_index("speed").loc["blitz"]
+        self.assertEqual(quality["duplicate_games"], 2)
+        self.assertEqual((blitz.games, blitz.white_wins, blitz.draws), (2, 2, 0))
+
+    def test_relabel_table_counts_pgn_label_against_time_control(self):
+        path = self.csv("relabel.csv", [
+            row("a", speed="classical", base_sec=600), row("b", speed="classical", base_sec=1800),
+            row("c", speed="classical", base_sec=900, inc_sec=10), row("d", speed="blitz"),
+            row("e", speed="correspondence", base_sec="", inc_sec="")])
+        tables, quality = speed.analyze([path], options(self.root, speeds=list(common.SPEEDS)))
+        table = tables["speed_relabel"].set_index(["declared_speed", "computed_speed"])
+        self.assertEqual(table.loc[("classical", "rapid"), "games"], 2)
+        self.assertAlmostEqual(table.loc[("classical", "rapid"), "share_of_declared"], 2 / 3)
+        self.assertEqual(table.loc[("correspondence", "correspondence"), "games"], 1)
+        self.assertEqual(int(table["games"][table["relabeled"]].sum()), quality["speed_mismatches"])
+        speed.write_report(tables, [path], options(self.root, speeds=list(common.SPEEDS)), quality)
+        report = (self.root / "summary.md").read_text(encoding="utf-8")
+        self.assertIn("Перекодировка контролей", report)
+        self.assertIn("Рапид: 2 из 2 партий", report)
+
+    def test_wilson_interval_and_draw_conclusion(self):
+        low, high = common.wilson_interval([0, 5, 50], [10, 100, 100])
+        np.testing.assert_allclose(low, [0, 0.021543, 0.403832], atol=1e-5)
+        np.testing.assert_allclose(high, [0.277528, 0.111754, 0.596168], atol=1e-5)
+        def table(draws, games):
+            frame = pd.DataFrame({"speed": ["blitz", "rapid"], "draws": draws, "games": games})
+            frame["draw_share"] = frame["draws"] / frame["games"]
+            frame["draw_share_ci_low"], frame["draw_share_ci_high"] = common.wilson_interval(frame["draws"], frame["games"])
+            return frame
+        self.assertIn("не выделяется", speed.draw_conclusion(table([345, 360], [10000, 10000])))
+        self.assertIn("не пересекаются", speed.draw_conclusion(table([300, 600], [10000, 10000])))
 
     def test_histogram_quantile_matches_numpy(self):
         from collections import Counter

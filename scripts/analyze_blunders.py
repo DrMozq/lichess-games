@@ -9,9 +9,9 @@ import numpy as np
 import pandas as pd
 
 if __package__:
-    from . import petr_analysis_common as common
+    from . import analysis_common as common
 else:
-    import petr_analysis_common as common
+    import analysis_common as common
 
 plt = common.plt
 EXTRA_COLUMNS = {f"{side}_{metric}" for side in ("white", "black")
@@ -64,7 +64,8 @@ def analyze(paths, args):
               "blunders_by_month_speed_rating": (["month", "speed", "rating_lower"], {}),
               "blunders_by_color_rating": (["speed", "side", "rating_lower"], {})}
     coverage, monthly_coverage = {}, {}
-    for frame in common.iter_chunks(paths, EXTRA_COLUMNS, args, quality):
+    relabel = Counter()
+    for frame in common.iter_chunks(paths, EXTRA_COLUMNS, args, quality, relabel):
         players = player_rows(frame)
         quality["invalid_eval_player_games"] += int((players["has_eval"] & ~players["valid_metrics"]).sum())
         quality["unrated_eval_player_games"] += int((players["valid_metrics"] & players["rating"].isna()).sum())
@@ -94,6 +95,7 @@ def analyze(paths, args):
             table["rating_upper_exclusive"] = table["rating_lower"] + args.rating_bin
             table["rating_center"] = table["rating_lower"] + args.rating_bin / 2
         tables[name] = table
+    tables["speed_relabel"] = common.relabel_table(relabel)
     return tables, quality
 
 
@@ -165,6 +167,7 @@ def write_report(tables, paths, args, quality):
     by_rating = tables["blunders_by_rating"]
     by_speed = tables["blunders_by_speed_rating"]
     lines = common.report_preamble("Задача 4 — ошибки, ACPL и рейтинг", paths, args, quality)
+    lines += common.relabel_lines(tables["speed_relabel"], args)
     lines += ["## Определения", "",
               "- Единица наблюдения — игрок в партии: белые и чёрные учитываются отдельно со своим рейтингом.",
               "- Грубая ошибка — потеря ≥200 сотых пешки по принятому парсером определению. "
@@ -239,6 +242,7 @@ def write_report(tables, paths, args, quality):
               "- `blunders_by_month_speed_rating.csv`: контроль периода и состава выборки.",
               "- `blunders_by_color_rating.csv`: белые и чёрные раздельно внутри контроля.",
               "- `analysis_coverage.csv`, `coverage_by_month.csv`: доля пригодных участий среди всех с известным рейтингом.",
+              "- `speed_relabel.csv`: исходная метка контроля из PGN → контроль по времени.",
               "- `run_metadata.json`: входы, параметры, версии библиотек и качество данных.", ""]
     (args.out / "summary.md").write_text("\n".join(lines), encoding="utf-8")
 

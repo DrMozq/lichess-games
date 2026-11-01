@@ -1,4 +1,4 @@
-"""Общие функции анализов Петра: потоковое чтение, качество данных, графики.
+"""Общие функции анализов задач 3–4: потоковое чтение, качество данных, графики.
 
 Используются только стандартная библиотека и зависимости requirements.txt.
 """
@@ -105,11 +105,28 @@ def classify_speed(base, increment):
     return result
 
 
-def iter_chunks(paths, extra_columns, args, quality):
+def _first_occurrences(conn, ids):
+    """Маска первых появлений game_id: внутри блока и среди всех прежних блоков.
+
+    Проверка идёт одним запросом на блок, а не по строке, поэтому дедупликация
+    остаётся дешёвой и на многомесячном датасете.
+    """
+    unique = ~ids.duplicated(keep="first")
+    conn.execute("DELETE FROM batch")
+    conn.executemany("INSERT INTO batch VALUES (?)", ((game_id,) for game_id in ids[unique]))
+    seen = {row[0] for row in conn.execute("SELECT id FROM batch JOIN seen USING (id)")}
+    conn.execute("INSERT OR IGNORE INTO seen SELECT id FROM batch")
+    conn.commit()
+    return (unique & ~ids.isin(seen)).to_numpy()
+
+
+def iter_chunks(paths, extra_columns, args, quality, relabel=None):
     """Читает только нужные поля; точная дедупликация между файлами на диске.
 
     Из завершённых строк с одинаковым game_id используется первая. Порядок
     файлов — порядок аргументов, внутри шаблона — лексикографический.
+    relabel (Counter) получает пары (исходная метка speed, расчётный контроль)
+    по всем уникальным завершённым партиям — до отбора контролей.
     """
     columns = sorted(BASE_COLUMNS | set(extra_columns))
     for path in paths:
@@ -121,6 +138,7 @@ def iter_chunks(paths, extra_columns, args, quality):
     with tempfile.TemporaryDirectory(prefix="lichess-dedup-") as tmp:
         with closing(sqlite3.connect(str(Path(tmp) / "seen.sqlite"))) as conn:
             conn.execute("CREATE TABLE seen (id TEXT PRIMARY KEY) WITHOUT ROWID")
+            conn.execute("CREATE TABLE batch (id TEXT)")
             for path in paths:
                 for frame in pd.read_csv(path, usecols=columns, dtype=str,
                                          keep_default_na=False, chunksize=args.chunksize):
@@ -132,10 +150,7 @@ def iter_chunks(paths, extra_columns, args, quality):
                     completed = frame["result"].isin(RESULTS)
                     quality["unfinished_or_invalid_result"] += int((~completed).sum())
                     frame = frame.loc[completed].copy()
-                    unique = np.fromiter(
-                        (conn.execute("INSERT OR IGNORE INTO seen VALUES (?)", (game_id,)).rowcount == 1
-                         for game_id in frame["game_id"]), dtype=bool, count=len(frame))
-                    conn.commit()
+                    unique = _first_occurrences(conn, frame["game_id"])
                     quality["duplicate_games"] += int((~unique).sum())
                     frame = frame.loc[unique].copy()
                     quality["unique_completed"] += len(frame)
@@ -144,6 +159,8 @@ def iter_chunks(paths, extra_columns, args, quality):
                     computed = computed.mask(computed.eq("unknown") & declared.eq("correspondence"), "correspondence")
                     known = computed.ne("unknown") & declared.ne("")
                     quality["speed_mismatches"] += int((known & computed.ne(declared)).sum())
+                    if relabel is not None:
+                        relabel.update(zip(declared.replace("", "unknown"), computed))
                     quality["unknown_time_control"] += int(computed.eq("unknown").sum())
                     frame["speed"] = computed if args.speed_source == "time_control" else declared
                     selected = frame["speed"].isin(getattr(args, "speeds", SPEEDS))
@@ -178,6 +195,51 @@ def grouped_frame(target, keys, values):
     # Явный тип нужен и для пустого набора: графики ожидают числа, не object.
     frame[list(values)] = frame[list(values)].astype(float)
     return frame
+
+
+def wilson_interval(successes, total, z=1.959964):
+    """95% интервал Уилсона для доли; при total = 0 — NaN."""
+    successes = np.asarray(successes, dtype=float)
+    total = np.asarray(total, dtype=float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        p = successes / total
+        denom = 1 + z ** 2 / total
+        center = (p + z ** 2 / (2 * total)) / denom
+        half = z * np.sqrt(p * (1 - p) / total + z ** 2 / (4 * total ** 2)) / denom
+    return center - half, center + half
+
+
+def relabel_table(relabel):
+    """Таблица «исходная метка speed → расчётный контроль» с долями внутри метки."""
+    frame = pd.DataFrame([(d, c, n) for (d, c), n in sorted(relabel.items())],
+                         columns=["declared_speed", "computed_speed", "games"])
+    frame["share_of_declared"] = ratio(frame["games"],
+                                       frame.groupby("declared_speed")["games"].transform("sum"))
+    frame["relabeled"] = frame["declared_speed"].ne(frame["computed_speed"])
+    return frame
+
+
+def relabel_lines(table, args):
+    """Раздел отчёта о перекодировке контролей."""
+    if args.speed_source != "time_control":
+        return []
+    lines = ["## Перекодировка контролей времени", "",
+             "Контроль определяется по современным границам Lichess, а не по метке из PGN. "
+             "В ранних дампах метки `rapid` нет, и партии с оценочной длительностью "
+             "8–25 минут на игрока помечены там как `classical`; после перекодировки они "
+             "попадают в рапид. Метка PGN сохраняется только для переписки (`correspondence`). "
+             "Ниже — все расхождения метки и расчёта в этих данных.", ""]
+    moved = table.loc[table["relabeled"]]
+    if moved.empty:
+        return lines + ["Расхождений исходных меток и расчёта нет.", ""]
+    view = moved[["declared_speed", "computed_speed", "games", "share_of_declared"]].copy()
+    view["share_of_declared"] *= 100
+    view["declared_speed"] = view["declared_speed"].map(lambda s: LABELS.get(s, s))
+    view["computed_speed"] = view["computed_speed"].map(lambda s: LABELS.get(s, s))
+    view.columns = ["Метка в PGN", "Контроль по времени", "Партий", "% от метки"]
+    return lines + [md_table(view), "",
+                    "Полная таблица переходов — `speed_relabel.csv`. "
+                    "Для анализа по исходным меткам запустите скрипт с `--speed-source event`.", ""]
 
 
 def ratio(numerator, denominator):

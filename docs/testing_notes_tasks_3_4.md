@@ -21,7 +21,7 @@
 
 ```bash
 python -m tests.test_parse_pgn
-python -m unittest tests.test_petr_analysis -v
+python -m unittest tests.test_tasks_3_4 -v
 python scripts/analyze_speed.py data/processed/games_2013-01.csv
 python scripts/analyze_blunders.py data/processed/games_2013-01.csv
 ```
@@ -41,3 +41,15 @@ python scripts/analyze_blunders.py "data/processed/full/*.csv"
 В эту папку следует поместить только файлы общего датасета. Список прочитанных
 CSV и число обработанных строк записываются в `run_metadata.json` в каждом
 каталоге отчётов. После запуска на общем датасете нужно обновить эту заметку.
+
+## Дополнение 1 ноября 2026 года (Поляков Вячеслав)
+
+- Модуль переименован в `scripts/analysis_common.py`, тесты — в
+  `tests/test_tasks_3_4.py`, эта заметка перенесена в `docs/`.
+- Полный датасет собирается командой `python scripts/build_dataset.py`
+  в `data/processed/full/` (2013-01 … 2014-12, список месяцев и число партий —
+  в `manifest.json`). Отчёты в `reports/` пока построены по 2013-01 и будут
+  перестроены после сборки.
+- В отчёты добавлены раздел о перекодировке контролей (`speed_relabel.csv`)
+  и 95% интервалы для доли ничьих; дедупликация `game_id` теперь идёт одним
+  запросом на блок, а не по строке.

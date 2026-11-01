@@ -9,9 +9,9 @@ import numpy as np
 import pandas as pd
 
 if __package__:
-    from . import petr_analysis_common as common
+    from . import analysis_common as common
 else:
-    import petr_analysis_common as common
+    import analysis_common as common
 
 plt = common.plt
 SUMS = (
@@ -44,6 +44,7 @@ def derive_stats(frame):
     for side in ("white", "black"):
         frame[f"{side}_mean_rating"] = common.ratio(frame[f"{side}_rating_sum"], frame[f"{side}_rating_games"])
     frame["mean_abs_rating_gap"] = common.ratio(frame["rating_gap_sum"], frame["paired_rating_games"])
+    frame["draw_share_ci_low"], frame["draw_share_ci_high"] = common.wilson_interval(frame["draws"], frame["games"])
     return frame
 
 
@@ -51,7 +52,8 @@ def analyze(paths, args):
     quality = Counter()
     by_speed, by_month, terminations = {}, {}, {}
     lengths, ratings = {}, {}
-    for frame in common.iter_chunks(paths, {"termination"}, args, quality):
+    relabel = Counter()
+    for frame in common.iter_chunks(paths, {"termination"}, args, quality, relabel):
         frame["games"] = 1
         for result, column in zip(common.RESULTS, ("white_wins", "draws", "black_wins")):
             frame[column] = frame["result"].eq(result).astype(int)
@@ -92,7 +94,27 @@ def analyze(paths, args):
                                for rating, n in sorted(ratings.get((speed, side), {}).items())],
                               columns=["speed", "side", "rating", "player_games"])
     return {"speed_summary": summary, "speed_by_month": monthly, "terminations": terms,
-            "length_distribution": length_hist, "rating_distribution": rating_hist}, quality
+            "length_distribution": length_hist, "rating_distribution": rating_hist,
+            "speed_relabel": common.relabel_table(relabel)}, quality
+
+
+def draw_cell(row):
+    if not row.games:
+        return "—"
+    return f"{100 * row.draw_share:.2f} ({100 * row.draw_share_ci_low:.2f}–{100 * row.draw_share_ci_high:.2f})"
+
+
+def draw_conclusion(available):
+    """Вывод о ничьих: разницу называем, только если 95% интервалы не пересекаются."""
+    low = available.loc[available["draw_share"].idxmin()]
+    high = available.loc[available["draw_share"].idxmax()]
+    span = f"{low['draw_share']:.2%} – {high['draw_share']:.2%}"
+    if high["draw_share_ci_low"] <= low["draw_share_ci_high"]:
+        return (f"- Доля ничьих по контролям: {span}. 95% интервалы крайних значений пересекаются, "
+                "поэтому различие доли ничьих между контролями в этой выборке не выделяется.")
+    return (f"- Доля ничьих выше в контроле «{common.LABELS[high['speed']]}» ({high['draw_share']:.2%}), "
+            f"ниже — «{common.LABELS[low['speed']]}» ({low['draw_share']:.2%}); 95% интервалы не пересекаются. "
+            "Интервалы считают партии независимыми, поэтому это ориентир, а не строгий тест.")
 
 
 def plots(tables, out):
@@ -185,11 +207,12 @@ def plots(tables, out):
 def write_report(tables, paths, args, quality):
     summary = tables["speed_summary"]
     lines = common.report_preamble("Задача 3 — контроли времени", paths, args, quality)
+    lines += common.relabel_lines(tables["speed_relabel"], args)
     brief = summary[["speed", "games", "draw_share", "mean_plies", "median_plies",
                      "white_mean_rating", "black_mean_rating"]].copy()
     brief["speed"] = brief["speed"].map(common.LABELS)
-    brief["draw_share"] *= 100
-    brief.columns = ["Контроль", "Партий", "Ничьих, %", "Среднее, полуходы", "Медиана, полуходы",
+    brief["draw_share"] = [draw_cell(row) for row in summary.itertuples()]
+    brief.columns = ["Контроль", "Партий", "Ничьих, % (95% ДИ)", "Среднее, полуходы", "Медиана, полуходы",
                      "Рейтинг белых", "Рейтинг чёрных"]
     lines += ["## Сравнение", "", common.md_table(brief), "", "## Выводы по этой выборке", ""]
     available = summary[summary["games"].gt(0)]
@@ -198,9 +221,15 @@ def write_report(tables, paths, args, quality):
     else:
         most = available.loc[available["games"].idxmax()]
         lines += [f"- Больше всего партий: {common.LABELS[most['speed']]} — {int(most['games']):,}.".replace(",", " ")]
+        relabeled = tables["speed_relabel"]
+        for row in available.itertuples():
+            moved = relabeled.loc[relabeled["computed_speed"].eq(row.speed) & relabeled["relabeled"], "games"].sum()
+            if args.speed_source == "time_control" and moved:
+                lines += [f"- {common.LABELS[row.speed]}: {int(moved):,} из {int(row.games):,} партий "
+                          f"({moved / row.games:.0%}) имели в PGN другую метку контроля "
+                          "(см. раздел о перекодировке).".replace(",", " ")]
         if len(available) >= 2:
-            draw = available.loc[available["draw_share"].idxmax()]
-            lines += [f"- Наибольшая наблюдаемая доля ничьих: {common.LABELS[draw['speed']]} — {draw['draw_share']:.2%}."]
+            lines += [draw_conclusion(available)]
         for row in available.itertuples():
             if pd.notna(row.median_plies):
                 lines += [f"- {common.LABELS[row.speed]}: медиана {row.median_plies:g} полуходов, "
@@ -209,6 +238,7 @@ def write_report(tables, paths, args, quality):
               "- Длина — `n_plies`, число отдельных ходов сторон. Это не время в минутах. "
               "В текущем CSV нет показаний часов, только флаг `has_clock`.",
               "- Доли результатов считаются от всех завершённых партий соответствующего контроля. "
+              "Для доли ничьих приведён 95% интервал Уилсона; он не учитывает повторные партии одних игроков. "
               "Результативность — доля побед (1 − доля ничьих); `white_score` учитывает ничью как 0.5.",
               "- `Normal` в Termination не позволяет разделить мат, сдачу и другие нормальные окончания. "
               "Пустой тег показан как `Unknown`; более подробные причины не выдумываются.",
@@ -227,6 +257,7 @@ def write_report(tables, paths, args, quality):
     lines += ["## Таблицы", "", "- `speed_summary.csv`: сводка и знаменатели метрик.",
               "- `speed_by_month.csv`: те же средние и доли по месяцам.",
               "- `terminations.csv`: число и доля каждого окончания внутри контроля.",
+              "- `speed_relabel.csv`: исходная метка контроля из PGN → контроль по времени.",
               "- `length_distribution.csv`, `rating_distribution.csv`: точные частотные распределения.",
               "- `run_metadata.json`: входы, параметры, версии библиотек и качество данных.", ""]
     (args.out / "summary.md").write_text("\n".join(lines), encoding="utf-8")
