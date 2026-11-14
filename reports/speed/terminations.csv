@@ -1,7 +1,13 @@
 speed,termination,games,share_within_speed
-blitz,Normal,32771.000000,0.708042
-blitz,Time forfeit,13513.000000,0.291958
-classical,Normal,2330.000000,0.857879
-classical,Time forfeit,386.000000,0.142121
-rapid,Normal,32636.000000,0.835107
-rapid,Time forfeit,6444.000000,0.164893
+blitz,Abandoned,45145.000000,0.005801
+blitz,Normal,5560313.000000,0.714533
+blitz,Rules infraction,357.000000,0.000046
+blitz,Time forfeit,2175934.000000,0.279620
+classical,Abandoned,58.000000,0.000160
+classical,Normal,310505.000000,0.857628
+classical,Rules infraction,254.000000,0.000702
+classical,Time forfeit,51234.000000,0.141510
+rapid,Abandoned,17380.000000,0.003839
+rapid,Normal,3792221.000000,0.837730
+rapid,Rules infraction,857.000000,0.000189
+rapid,Time forfeit,716325.000000,0.158242

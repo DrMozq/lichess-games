@@ -17,17 +17,22 @@
 ```
 scripts/download_data.py   — скачивание сырого дампа из источника
 scripts/parse_pgn.py       — потоковый разбор PGN (.zst) в CSV, по строке на партию
-scripts/analyze_basic.py   — первичная аналитика: сводка и графики
+scripts/analyze_basic.py   — первичная аналитика одного CSV (веха 23.10)
+scripts/analyze_openings.py — задача 1: популярность дебютов и её динамика
+scripts/analyze_results.py — задача 2: результат, дебют и разница рейтингов
 scripts/analyze_speed.py   — задача 3: сравнение блица, рапида и классики
 scripts/analyze_blunders.py — задача 4: ошибки и ACPL в зависимости от рейтинга
-scripts/analysis_common.py — общие функции задач 3–4
-scripts/build_dataset.py   — сборка полного датасета: скачивание и разбор диапазона месяцев
-tests/                     — тесты парсера, сборки датасета и задач 3–4
-docs/                      — описание задач 3–4 и заметки о проверке
+scripts/analysis_common.py — общие функции задач 1–4
+scripts/build_dataset.py   — сборка датасета: скачивание, разбор, выборка для ML
+tests/                     — тесты парсера, сборки датасета и задач 1–4
+docs/                      — описание задач 1–4 и заметки о проверке
 data/raw/                  — сырые .pgn.zst дампы (не хранятся в git)
 data/processed/            — разобранные CSV (не хранятся в git)
 data/processed/full/       — полный датасет и manifest.json
-reports/                   — результаты аналитики: summary.md и графики
+data/processed/sample/     — выборка для задачи 5
+reports/basic/             — первичная аналитика января 2013 (веха 23.10)
+reports/openings/          — задача 1: таблицы, графики и выводы
+reports/results/           — задача 2: таблицы, графики и выводы
 reports/speed/             — задача 3: таблицы, графики и выводы
 reports/blunders/          — задача 4: таблицы, графики и выводы
 ```
@@ -37,10 +42,10 @@ reports/blunders/          — задача 4: таблицы, графики и
 pip install -r requirements.txt
 python scripts/download_data.py 2013-01                          # скачать дамп(ы) в data/raw/
 python scripts/parse_pgn.py data/raw/lichess_2013-01.pgn.zst     # -> data/processed/games_2013-01.csv
-python scripts/analyze_basic.py data/processed/games_2013-01.csv # -> reports/
+python scripts/analyze_basic.py data/processed/games_2013-01.csv # -> reports/basic/
 ```
 Месяцы передаются аргументами (`python scripts/download_data.py 2013-01 2014-01`), уже скачанные пропускаются.
-Загрузка идёт во временный `.part`-файл, поэтому оборванная загрузка не оставляет битый файл.
+Загрузка идёт во временный `.part`-файл и при повторном запуске продолжается с места обрыва.
 Для больших дампов в `parse_pgn.py` есть `--max-games N`: файл читается потоком и обработка останавливается после N партий.
 
 ## Поля CSV
@@ -53,22 +58,47 @@ python scripts/analyze_basic.py data/processed/games_2013-01.csv # -> reports/
 
 ## Полный датасет
 
-Полный датасет проекта — помесячные дампы **2013-01 … 2014-12** (24 месяца):
-два года дают динамику по месяцам и годам для задачи 1 и больше партий
-с оценками Stockfish для задачи 4, чем один месяц. Сборка одной командой:
+Датасет проекта — **январь каждого года 2013–2017** (5 месяцев целиком):
+срез по годам для динамики дебютов (задача 1), контролей времени (задача 3)
+и ошибок (задача 4). Месяцы не обрезаются по числу партий: дамп упорядочен
+по времени, и «первые N партий» дали бы только первые дни января.
+Сборка одной командой (её можно прерывать и запускать заново):
 
 ```bash
-python scripts/build_dataset.py                    # 2013-01 … 2014-12
-python scripts/build_dataset.py 2013-01 2013-06    # другой диапазон
-python scripts/build_dataset.py --delete-raw       # удалять .zst после разбора
+python scripts/build_dataset.py                  # скачать, разобрать, собрать выборку
+python scripts/build_dataset.py --download-only  # только докачать недостающие дампы
+python scripts/build_dataset.py --delete-raw     # удалять .zst после разбора
 ```
 
-Каждый месяц скачивается в `data/raw/` и разбирается в
-`data/processed/full/games_ГГГГ-ММ.csv`; итоги (сколько партий прочитано,
-записано и отброшено) пишутся в `data/processed/full/manifest.json`.
-Готовые месяцы пропускаются, поэтому оборванную сборку можно запустить заново.
-`download_data.py` и `parse_pgn.py` при этом не меняются. Нужно несколько ГБ
-на диске: сырые дампы плюс CSV (с `--delete-raw` — только CSV).
+Что получается:
+
+| Путь | Что это |
+| --- | --- |
+| `data/raw/lichess_ГГГГ-ММ.pgn.zst` | сырые дампы (~3,2 ГБ на 5 месяцев) |
+| `data/processed/full/games_ГГГГ-ММ.csv` | все партии месяца, по строке на партию (несколько ГБ) |
+| `data/processed/full/manifest.json` | состав датасета: сколько партий прочитано, записано и отброшено |
+| `data/processed/sample/games_sample.csv` | выборка для задачи 5: по 200 000 случайных партий из каждого месяца |
+
+Все шаги пропускаются, если уже сделаны. Загрузка докачивает `.part` с места
+обрыва и сама повторяет попытку при обрыве сети. Другой состав месяцев:
+`python scripts/build_dataset.py 2013-01 2014-01` или `--range 2013-01 2013-06`.
+
+**Выборка для ML (задача 5).** Полный датасет в pandas целиком не помещается,
+поэтому для обучения есть `games_sample.csv`: те же колонки, что в полном CSV,
+поровну партий из каждого года. Она воспроизводима (`--seed`, по умолчанию 42)
+и пересобирается только при смене параметров (`--sample-per-month N`). В выборке
+есть незавершённые партии (`result = "*"`): их нужно отфильтровать перед обучением.
+Скрипты задач 3–4 читают полный датасет потоково и выборка им не нужна.
+
+## Задачи 1–2
+
+Дебюты (задача 1) и результат партии от дебюта и разницы рейтингов (задача 2) — Поляков Вячеслав.
+Подробности, определения и ограничения — в [docs/tasks_1_2.md](docs/tasks_1_2.md).
+
+```bash
+python scripts/analyze_openings.py "data/processed/full/*.csv"   # -> reports/openings/
+python scripts/analyze_results.py "data/processed/full/*.csv"    # -> reports/results/
+```
 
 ## Задачи 3–4
 
@@ -80,18 +110,24 @@ python scripts/analyze_speed.py "data/processed/full/*.csv"      # -> reports/sp
 python scripts/analyze_blunders.py "data/processed/full/*.csv"   # -> reports/blunders/
 ```
 
+## Задача 5
+
+Предсказание исхода партии — Инюшин Михаил. С чего начать, какие данные и признаки
+использовать и каких избегать — в [docs/task_5.md](docs/task_5.md).
+
 ## Тесты
 
 ```bash
 python -m tests.test_parse_pgn
-python -m unittest tests.test_tasks_3_4 tests.test_build_dataset -v
+python -m unittest -v   # задачи 1–4 и сборка датасета
 ```
 
 ## Статус
 - [x] Репозиторий создан, первичные данные собраны
 - [x] Парсер PGN → CSV, скрипт первичной аналитики
-- [x] Скрипт сборки полного датасета (2013-01 … 2014-12)
-- [x] Задачи 3–4: скрипты и отчёты (отчёты в репозитории пока по 2013-01)
-- [ ] Полный датасет собран, отчёты перестроены на нём
+- [x] Скрипт сборки датасета (январь 2013–2017) и выборки для ML
+- [x] Задачи 3–4: скрипты и отчёты на полном датасете (`reports/speed/`, `reports/blunders/`)
+- [x] Задачи 1–2: скрипты и отчёты на полном датасете (`reports/openings/`, `reports/results/`)
+- [x] Полный датасет собран (январь 2013–2017, 17,8 млн партий)
 - [ ] ELT-пайплайн в PostgreSQL
-- [ ] Анализ по задачам 1–5
+- [ ] Задача 5: предсказание исхода (Инюшин Михаил)

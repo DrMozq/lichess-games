@@ -1,7 +1,7 @@
 """
 Первичная простая аналитика по CSV, который делает parse_pgn.py.
 
-Считает по всей выборке и сохраняет в reports/:
+Считает по всей выборке и сохраняет в reports/basic/:
   - summary.md              сводка с числами (для отчёта)
   - result_share.png        доли результатов
   - top_openings.png        самые частые дебюты
@@ -224,7 +224,7 @@ def main():
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     ap.add_argument("csv", type=Path, help="CSV от parse_pgn.py")
-    ap.add_argument("--out", type=Path, default=Path("reports"))
+    ap.add_argument("--out", type=Path, default=Path("reports/basic"))
     args = ap.parse_args()
 
     args.out.mkdir(parents=True, exist_ok=True)

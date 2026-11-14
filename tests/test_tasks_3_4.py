@@ -1,4 +1,4 @@
-"""Проверки задач 3–4: python -m unittest tests.test_tasks_3_4 -v.
+"""Проверки задач 3–4: python -m unittest tests.test_tasks_3_4 -v (или python tests/test_tasks_3_4.py).
 
 Фикстуры синтетические, задают проверяемые вручную знаменатели и потери.
 Отдельная проверка использует штатный парсер PGN проекта.
@@ -6,24 +6,35 @@
 
 import argparse
 import csv
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
+from typing import Any
 
 import numpy as np
 import pandas as pd
 
+# Корень проекта в sys.path: тесты запускаются и файлом, и из любой папки.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from scripts import analysis_common as common
 from scripts import analyze_blunders as blunders
 from scripts import analyze_speed as speed
-from scripts import analysis_common as common
 from scripts import parse_pgn
 from tests.test_parse_pgn import ANALYZED, rows
 
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def scalar(value: Any) -> float:
+    """Одно значение из таблицы pandas как float (для проверок и анализатора типов)."""
+    return float(value)
+
 
 def row(game_id, **overrides):
-    record = dict.fromkeys(parse_pgn.COLUMNS, "")
+    record: dict[str, object] = dict.fromkeys(parse_pgn.COLUMNS, "")
     record.update(game_id=game_id, speed="blitz", result="1-0", utc_date="2013-01-01",
                   base_sec=300, inc_sec=0, white_elo=1200, black_elo=1800,
                   n_plies=40, has_eval=0, termination="Normal")
@@ -71,7 +82,7 @@ class AnalysisTests(unittest.TestCase):
         tables, quality = speed.analyze([p1, p2], args)
         blitz = tables["speed_summary"].set_index("speed").loc["blitz"]
         self.assertEqual(blitz.games, 3)
-        self.assertAlmostEqual(blitz.draw_share, 1 / 3)
+        self.assertAlmostEqual(scalar(blitz.draw_share), 1 / 3)
         self.assertEqual(blitz.median_plies, 40)
         self.assertEqual(blitz.q25_plies, 30.5)
         self.assertEqual(blitz.white_rating_games, 2)
@@ -103,7 +114,7 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(group.mean_blunders_per_player_game, .5)
         cov = tables["analysis_coverage"].set_index("rating_lower").loc[1200]
         self.assertEqual(cov.all_player_games, 3)
-        self.assertAlmostEqual(cov.analyzed_share, 2 / 3)
+        self.assertAlmostEqual(scalar(cov.analyzed_share), 2 / 3)
         self.assertEqual(quality["valid_player_games"], 2)
 
     def test_parser_integration_and_separate_sides(self):
@@ -117,7 +128,7 @@ class AnalysisTests(unittest.TestCase):
         self.assertEqual(result.loc[1800, "evaluated_moves"], 3)
 
     def test_invalid_metrics_and_missing_rating_are_excluded(self):
-        template = dict(has_eval=1, white_acpl=50, white_evaluated=10, white_blunders=1)
+        template = {"has_eval": 1, "white_acpl": 50, "white_evaluated": 10, "white_blunders": 1}
         records = []
         for i, change in enumerate(({"white_evaluated": 0}, {"white_blunders": 11},
                                     {"white_acpl": "inf"}, {"white_evaluated": 1.5},
@@ -174,7 +185,7 @@ class AnalysisTests(unittest.TestCase):
         tables, quality = speed.analyze([path], options(self.root, speeds=list(common.SPEEDS)))
         table = tables["speed_relabel"].set_index(["declared_speed", "computed_speed"])
         self.assertEqual(table.loc[("classical", "rapid"), "games"], 2)
-        self.assertAlmostEqual(table.loc[("classical", "rapid"), "share_of_declared"], 2 / 3)
+        self.assertAlmostEqual(scalar(table.loc[("classical", "rapid"), "share_of_declared"]), 2 / 3)
         self.assertEqual(table.loc[("correspondence", "correspondence"), "games"], 1)
         self.assertEqual(int(table["games"][table["relabeled"]].sum()), quality["speed_mismatches"])
         speed.write_report(tables, [path], options(self.root, speeds=list(common.SPEEDS)), quality)
@@ -206,7 +217,8 @@ class AnalysisTests(unittest.TestCase):
             for script in ("analyze_speed", "analyze_blunders"):
                 out = self.root / f"{script}-{empty}"
                 result = subprocess.run([sys.executable, "-m", f"scripts.{script}", str(path),
-                                         "--out", str(out)], text=True, capture_output=True)
+                                         "--out", str(out)],
+                                        text=True, capture_output=True, check=False, cwd=ROOT)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertTrue((out / "summary.md").is_file())
                 self.assertTrue((out / "run_metadata.json").is_file())

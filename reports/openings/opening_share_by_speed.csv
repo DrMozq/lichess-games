@@ -1,0 +1,825 @@
+speed,family,games,share
+blitz,Sicilian Defense,1025200.000000,0.131744
+blitz,French Defense,559983.000000,0.071961
+blitz,Queen's Pawn Game,470525.000000,0.060465
+blitz,Scandinavian Defense,340724.000000,0.043785
+blitz,Caro-Kann Defense,275619.000000,0.035419
+blitz,Italian Game,268078.000000,0.034450
+blitz,King's Pawn Game,263767.000000,0.033896
+blitz,Philidor Defense,258147.000000,0.033173
+blitz,English Opening,246867.000000,0.031724
+blitz,Ruy Lopez,226401.000000,0.029094
+blitz,Queen's Gambit Declined,157852.000000,0.020285
+blitz,Modern Defense,157418.000000,0.020229
+blitz,Scotch Game,145094.000000,0.018645
+blitz,Indian Game,136514.000000,0.017543
+blitz,Bishop's Opening,135843.000000,0.017457
+blitz,Pirc Defense,128085.000000,0.016460
+blitz,Van't Kruijs Opening,115838.000000,0.014886
+blitz,Zukertort Opening,115168.000000,0.014800
+blitz,Slav Defense,107734.000000,0.013844
+blitz,Horwitz Defense,104629.000000,0.013445
+blitz,King's Gambit Accepted,99447.000000,0.012780
+blitz,Queen's Gambit Refused,93255.000000,0.011984
+blitz,Queen's Gambit Accepted,90781.000000,0.011666
+blitz,Hungarian Opening,88090.000000,0.011320
+blitz,Four Knights Game,87425.000000,0.011235
+blitz,King's Indian Defense,87141.000000,0.011198
+blitz,Owen Defense,87106.000000,0.011194
+blitz,Nimzowitsch Defense,85968.000000,0.011047
+blitz,Alekhine Defense,84380.000000,0.010843
+blitz,Bird Opening,83420.000000,0.010720
+blitz,Vienna Game,69098.000000,0.008879
+blitz,Russian Game,68058.000000,0.008746
+blitz,Nimzo-Larsen Attack,67113.000000,0.008624
+blitz,Queen's Pawn,63246.000000,0.008127
+blitz,Nimzo-Indian Defense,60125.000000,0.007726
+blitz,Semi-Slav Defense,56031.000000,0.007200
+blitz,Center Game,54228.000000,0.006969
+blitz,Dutch Defense,48565.000000,0.006241
+blitz,Rat Defense,46923.000000,0.006030
+blitz,Polish Opening,46053.000000,0.005918
+blitz,Benoni Defense,45723.000000,0.005876
+blitz,English Defense,40097.000000,0.005153
+blitz,Robatsch (Modern) Defense,38861.000000,0.004994
+blitz,King's Gambit,37222.000000,0.004783
+blitz,King's Gambit Declined,36113.000000,0.004641
+blitz,Three Knights Opening,35709.000000,0.004589
+blitz,King's Knight Opening,35285.000000,0.004534
+blitz,Unknown,33393.000000,0.004291
+blitz,Old Benoni Defense,32326.000000,0.004154
+blitz,Mieses Opening,32133.000000,0.004129
+blitz,King's Indian Attack,31917.000000,0.004102
+blitz,Giuoco Piano,26951.000000,0.003463
+blitz,Reti Opening,26812.000000,0.003445
+blitz,Gruenfeld Defense,25054.000000,0.003220
+blitz,Petrov's Defense,23471.000000,0.003016
+blitz,Van Geet Opening,22480.000000,0.002889
+blitz,Grob Opening,22190.000000,0.002852
+blitz,Old Indian Defense,21865.000000,0.002810
+blitz,Elephant Gambit,20905.000000,0.002686
+blitz,Danish Gambit,20887.000000,0.002684
+blitz,Ponziani Opening,20696.000000,0.002660
+blitz,Blackmar-Diemer Gambit,20658.000000,0.002655
+blitz,Trompowsky Attack,19450.000000,0.002499
+blitz,St. George Defense,18319.000000,0.002354
+blitz,King's Pawn,17490.000000,0.002248
+blitz,Torre Attack,16789.000000,0.002157
+blitz,Colle System,16077.000000,0.002066
+blitz,Englund Gambit Complex,15891.000000,0.002042
+blitz,Englund Gambit,15686.000000,0.002016
+blitz,Englund Gambit Declined,14893.000000,0.001914
+blitz,Saragossa Opening,14466.000000,0.001859
+blitz,Budapest Defense,12683.000000,0.001630
+blitz,Mikenas Defense,12147.000000,0.001561
+blitz,Queen's Indian Defense,10335.000000,0.001328
+blitz,Tarrasch Defense,9714.000000,0.001248
+blitz,Danish Gambit Accepted,9285.000000,0.001193
+blitz,Franco-Benoni Defense,8318.000000,0.001069
+blitz,East Indian Defense,7820.000000,0.001005
+blitz,Catalan Opening,7611.000000,0.000978
+blitz,Latvian Gambit Accepted,7380.000000,0.000948
+blitz,London System,7318.000000,0.000940
+blitz,Latvian Gambit,7266.000000,0.000934
+blitz,Duras Gambit,6948.000000,0.000893
+blitz,Benko Gambit,6013.000000,0.000773
+blitz,Kadas Opening,5874.000000,0.000755
+blitz,Benko Gambit Accepted,5838.000000,0.000750
+blitz,Czech Defense,5355.000000,0.000688
+blitz,King's Pawn Opening,5272.000000,0.000677
+blitz,Queen's Gambit,5197.000000,0.000668
+blitz,Englund Gambit Complex Declined,5136.000000,0.000660
+blitz,Anderssen Opening,5091.000000,0.000654
+blitz,Bogo-Indian Defense,4845.000000,0.000623
+blitz,Goldsmith Defense,4789.000000,0.000615
+blitz,Richter-Veresov Attack,4782.000000,0.000615
+blitz,Neo-Gruenfeld Defense,4696.000000,0.000603
+blitz,Clemenz Opening,4669.000000,0.000600
+blitz,Yusupov-Rubinstein System,4504.000000,0.000579
+blitz,Ware Opening,4491.000000,0.000577
+blitz,Ware Defense,4389.000000,0.000564
+blitz,Borg Defense,4252.000000,0.000546
+blitz,Gedult's Opening,4138.000000,0.000532
+blitz,Polish Defense,3858.000000,0.000496
+blitz,Carr Defense,3849.000000,0.000495
+blitz,Nimzowitsch-Larsen Attack,3808.000000,0.000489
+blitz,Pterodactyl Defense,3537.000000,0.000455
+blitz,Canard Opening,3442.000000,0.000442
+blitz,Barnes Defense,3302.000000,0.000424
+blitz,Gunderam Defense,3230.000000,0.000415
+blitz,Petrov,3210.000000,0.000413
+blitz,Blumenfeld Countergambit,3135.000000,0.000403
+blitz,Amazon Attack,3106.000000,0.000399
+blitz,Danish Gambit Declined,2815.000000,0.000362
+blitz,Mexican Defense,2734.000000,0.000351
+blitz,Queen's Pawn Opening,2650.000000,0.000341
+blitz,Lion Defense,2645.000000,0.000340
+blitz,Kangaroo Defense,2609.000000,0.000335
+blitz,Old Indian,2458.000000,0.000316
+blitz,Slav Indian,2443.000000,0.000314
+blitz,Paleface Attack,2286.000000,0.000294
+blitz,Portuguese Opening,2265.000000,0.000291
+blitz,Blackmar-Diemer Gambit Declined,1913.000000,0.000246
+blitz,Guatemala Defense,1635.000000,0.000210
+blitz,Semi-Bononi,1557.000000,0.000200
+blitz,Queen's Indian Accelerated,1482.000000,0.000190
+blitz,Amar Opening,1439.000000,0.000185
+blitz,Wade Defense,1402.000000,0.000180
+blitz,Benko Gambit Declined,1160.000000,0.000149
+blitz,Rubinstein Opening,1044.000000,0.000134
+blitz,Barnes Opening,915.000000,0.000118
+blitz,King's Indian,865.000000,0.000111
+blitz,Hippopotamus Defense,826.000000,0.000106
+blitz,Scotch Gambit,667.000000,0.000086
+blitz,Lasker Simul Special,660.000000,0.000085
+blitz,Sodium Attack,646.000000,0.000083
+blitz,Center Game Accepted,645.000000,0.000083
+blitz,System,637.000000,0.000082
+blitz,Creepy Crawly Formation,563.000000,0.000072
+blitz,Robatsch Defense,543.000000,0.000070
+blitz,Semi-Slav Defense Accepted,536.000000,0.000069
+blitz,Lemming Defense,397.000000,0.000051
+blitz,Valencia Opening,351.000000,0.000045
+blitz,Crab Opening,347.000000,0.000045
+blitz,Australian Defense,273.000000,0.000035
+blitz,Global Opening,270.000000,0.000035
+blitz,English Orangutan,232.000000,0.000030
+blitz,Vulture Defense,195.000000,0.000025
+blitz,Montevideo Defense,182.000000,0.000023
+blitz,Borg Opening,157.000000,0.000020
+blitz,Irish Gambit,145.000000,0.000019
+blitz,Doery Defense,121.000000,0.000016
+blitz,Zukertort Defense,121.000000,0.000016
+blitz,Bronstein Gambit,100.000000,0.000013
+blitz,Blackmar-Diemer,97.000000,0.000012
+blitz,Blumenfeld Countergambit Accepted,67.000000,0.000009
+blitz,English Rat,54.000000,0.000007
+blitz,Marienbad System,44.000000,0.000006
+blitz,Four Knights,43.000000,0.000006
+blitz,Ruy Lopez Defense,30.000000,0.000004
+blitz,Tayler Opening,26.000000,0.000003
+blitz,Norwegian Defense,19.000000,0.000002
+blitz,Boden-Kieseritzky Gambit,18.000000,0.000002
+blitz,Amsterdam Attack,8.000000,0.000001
+blitz,Zaire Defense,8.000000,0.000001
+blitz,Formation,7.000000,0.000001
+blitz,Veresov Opening,6.000000,0.000001
+blitz,Venezolana Opening,5.000000,0.000001
+blitz,Queen's Indian,3.000000,0.000000
+blitz,Dresden Opening,2.000000,0.000000
+bullet,Sicilian Defense,474522.000000,0.094621
+bullet,French Defense,342364.000000,0.068269
+bullet,Queen's Pawn Game,247765.000000,0.049405
+bullet,Scandinavian Defense,241820.000000,0.048220
+bullet,Caro-Kann Defense,193779.000000,0.038640
+bullet,Zukertort Opening,189312.000000,0.037749
+bullet,Hungarian Opening,188652.000000,0.037618
+bullet,Modern Defense,186167.000000,0.037122
+bullet,English Opening,181164.000000,0.036125
+bullet,Van't Kruijs Opening,164516.000000,0.032805
+bullet,Nimzo-Larsen Attack,140551.000000,0.028026
+bullet,Pirc Defense,103858.000000,0.020710
+bullet,King's Pawn Game,103347.000000,0.020608
+bullet,Horwitz Defense,101630.000000,0.020265
+bullet,Mieses Opening,98908.000000,0.019723
+bullet,Indian Game,89677.000000,0.017882
+bullet,Queen's Gambit Declined,85107.000000,0.016971
+bullet,Owen Defense,80065.000000,0.015965
+bullet,Queen's Pawn,79447.000000,0.015842
+bullet,Old Benoni Defense,74113.000000,0.014778
+bullet,Philidor Defense,73078.000000,0.014572
+bullet,Alekhine Defense,70374.000000,0.014033
+bullet,Slav Defense,68303.000000,0.013620
+bullet,Bird Opening,66436.000000,0.013248
+bullet,Italian Game,64719.000000,0.012905
+bullet,Queen's Gambit Refused,54344.000000,0.010836
+bullet,King's Indian Defense,52985.000000,0.010565
+bullet,Ruy Lopez,47375.000000,0.009447
+bullet,Nimzowitsch Defense,47072.000000,0.009386
+bullet,English Defense,46571.000000,0.009286
+bullet,Scotch Game,46246.000000,0.009222
+bullet,King's Indian Attack,42469.000000,0.008468
+bullet,Vienna Game,41508.000000,0.008277
+bullet,Bishop's Opening,37220.000000,0.007422
+bullet,Semi-Slav Defense,35165.000000,0.007012
+bullet,Benoni Defense,33299.000000,0.006640
+bullet,Rat Defense,31963.000000,0.006374
+bullet,Queen's Gambit Accepted,31496.000000,0.006280
+bullet,Dutch Defense,29980.000000,0.005978
+bullet,King's Gambit Accepted,28936.000000,0.005770
+bullet,Van Geet Opening,28591.000000,0.005701
+bullet,Saragossa Opening,28160.000000,0.005615
+bullet,Four Knights Game,27704.000000,0.005524
+bullet,Nimzo-Indian Defense,27660.000000,0.005515
+bullet,Polish Opening,26302.000000,0.005245
+bullet,Robatsch (Modern) Defense,25240.000000,0.005033
+bullet,Englund Gambit Declined,24783.000000,0.004942
+bullet,Englund Gambit,24606.000000,0.004907
+bullet,Reti Opening,22805.000000,0.004547
+bullet,Blackmar-Diemer Gambit,21999.000000,0.004387
+bullet,Old Indian Defense,21261.000000,0.004240
+bullet,Russian Game,20975.000000,0.004182
+bullet,Center Game,20792.000000,0.004146
+bullet,Unknown,17293.000000,0.003448
+bullet,King's Gambit Declined,16970.000000,0.003384
+bullet,Colle System,15457.000000,0.003082
+bullet,Grob Opening,14776.000000,0.002946
+bullet,Three Knights Opening,14466.000000,0.002885
+bullet,King's Gambit,13363.000000,0.002665
+bullet,Torre Attack,12401.000000,0.002473
+bullet,Gedult's Opening,11467.000000,0.002287
+bullet,Elephant Gambit,11157.000000,0.002225
+bullet,Gruenfeld Defense,11034.000000,0.002200
+bullet,Mikenas Defense,10932.000000,0.002180
+bullet,St. George Defense,10754.000000,0.002144
+bullet,Englund Gambit Complex,10456.000000,0.002085
+bullet,King's Knight Opening,10244.000000,0.002043
+bullet,Trompowsky Attack,8685.000000,0.001732
+bullet,King's Pawn,7732.000000,0.001542
+bullet,Danish Gambit,6626.000000,0.001321
+bullet,Petrov's Defense,6331.000000,0.001262
+bullet,Duras Gambit,6181.000000,0.001233
+bullet,Franco-Benoni Defense,6136.000000,0.001224
+bullet,Clemenz Opening,6038.000000,0.001204
+bullet,Ware Opening,5540.000000,0.001105
+bullet,Giuoco Piano,5383.000000,0.001073
+bullet,East Indian Defense,5376.000000,0.001072
+bullet,Tarrasch Defense,5272.000000,0.001051
+bullet,Kadas Opening,5270.000000,0.001051
+bullet,Ponziani Opening,4807.000000,0.000959
+bullet,Anderssen Opening,4235.000000,0.000844
+bullet,Queen's Gambit,4169.000000,0.000831
+bullet,Neo-Gruenfeld Defense,4082.000000,0.000814
+bullet,Barnes Defense,3957.000000,0.000789
+bullet,Pterodactyl Defense,3907.000000,0.000779
+bullet,Yusupov-Rubinstein System,3907.000000,0.000779
+bullet,Queen's Indian Defense,3828.000000,0.000763
+bullet,London System,3746.000000,0.000747
+bullet,Latvian Gambit,3661.000000,0.000730
+bullet,Budapest Defense,3371.000000,0.000672
+bullet,Nimzowitsch-Larsen Attack,3341.000000,0.000666
+bullet,Catalan Opening,3316.000000,0.000661
+bullet,Englund Gambit Complex Declined,3296.000000,0.000657
+bullet,Amar Opening,3259.000000,0.000650
+bullet,Carr Defense,3202.000000,0.000638
+bullet,Blackmar-Diemer Gambit Declined,3009.000000,0.000600
+bullet,Goldsmith Defense,2956.000000,0.000589
+bullet,Borg Defense,2570.000000,0.000512
+bullet,Lasker Simul Special,2452.000000,0.000489
+bullet,Ware Defense,2444.000000,0.000487
+bullet,Latvian Gambit Accepted,2271.000000,0.000453
+bullet,Polish Defense,2168.000000,0.000432
+bullet,Benko Gambit,2121.000000,0.000423
+bullet,Czech Defense,2119.000000,0.000423
+bullet,Guatemala Defense,2115.000000,0.000422
+bullet,Lion Defense,1832.000000,0.000365
+bullet,Gunderam Defense,1796.000000,0.000358
+bullet,Mexican Defense,1754.000000,0.000350
+bullet,Old Indian,1712.000000,0.000341
+bullet,Danish Gambit Accepted,1663.000000,0.000332
+bullet,Valencia Opening,1649.000000,0.000329
+bullet,Richter-Veresov Attack,1632.000000,0.000325
+bullet,Amazon Attack,1583.000000,0.000316
+bullet,Benko Gambit Accepted,1551.000000,0.000309
+bullet,Canard Opening,1493.000000,0.000298
+bullet,Bogo-Indian Defense,1458.000000,0.000291
+bullet,Kangaroo Defense,1362.000000,0.000272
+bullet,Queen's Pawn Opening,1340.000000,0.000267
+bullet,Petrov,1323.000000,0.000264
+bullet,Blumenfeld Countergambit,1311.000000,0.000261
+bullet,Danish Gambit Declined,1286.000000,0.000256
+bullet,Slav Indian,1210.000000,0.000241
+bullet,King's Pawn Opening,1058.000000,0.000211
+bullet,Creepy Crawly Formation,927.000000,0.000185
+bullet,Semi-Bononi,786.000000,0.000157
+bullet,Wade Defense,784.000000,0.000156
+bullet,Portuguese Opening,716.000000,0.000143
+bullet,Hippopotamus Defense,648.000000,0.000129
+bullet,Sodium Attack,639.000000,0.000127
+bullet,Paleface Attack,602.000000,0.000120
+bullet,Queen's Indian Accelerated,589.000000,0.000117
+bullet,Semi-Slav Defense Accepted,486.000000,0.000097
+bullet,Global Opening,473.000000,0.000094
+bullet,King's Indian,451.000000,0.000090
+bullet,Rubinstein Opening,451.000000,0.000090
+bullet,Benko Gambit Declined,445.000000,0.000089
+bullet,Center Game Accepted,382.000000,0.000076
+bullet,Crab Opening,369.000000,0.000074
+bullet,Lemming Defense,282.000000,0.000056
+bullet,Barnes Opening,272.000000,0.000054
+bullet,Doery Defense,257.000000,0.000051
+bullet,Montevideo Defense,213.000000,0.000042
+bullet,Australian Defense,165.000000,0.000033
+bullet,Robatsch Defense,149.000000,0.000030
+bullet,Zukertort Defense,149.000000,0.000030
+bullet,System,148.000000,0.000030
+bullet,Scotch Gambit,146.000000,0.000029
+bullet,Irish Gambit,115.000000,0.000023
+bullet,Bronstein Gambit,86.000000,0.000017
+bullet,English Rat,64.000000,0.000013
+bullet,Blackmar-Diemer,63.000000,0.000013
+bullet,English Orangutan,58.000000,0.000012
+bullet,Vulture Defense,45.000000,0.000009
+bullet,Zaire Defense,21.000000,0.000004
+bullet,Boden-Kieseritzky Gambit,20.000000,0.000004
+bullet,Four Knights,20.000000,0.000004
+bullet,Blumenfeld Countergambit Accepted,19.000000,0.000004
+bullet,Ruy Lopez Defense,18.000000,0.000004
+bullet,Borg Opening,15.000000,0.000003
+bullet,Marienbad System,14.000000,0.000003
+bullet,Amsterdam Attack,10.000000,0.000002
+bullet,Tayler Opening,7.000000,0.000001
+bullet,Norwegian Defense,5.000000,0.000001
+bullet,Formation,3.000000,0.000001
+bullet,Venezolana Opening,3.000000,0.000001
+bullet,Dresden Opening,2.000000,0.000000
+bullet,Amar Gambit,1.000000,0.000000
+bullet,English Openings,1.000000,0.000000
+classical,Sicilian Defense,34658.000000,0.095727
+classical,King's Pawn Game,27410.000000,0.075708
+classical,Queen's Pawn Game,26496.000000,0.073183
+classical,French Defense,20648.000000,0.057031
+classical,Italian Game,18285.000000,0.050504
+classical,Philidor Defense,16889.000000,0.046648
+classical,Scandinavian Defense,15539.000000,0.042919
+classical,Ruy Lopez,14406.000000,0.039790
+classical,Bishop's Opening,9852.000000,0.027212
+classical,English Opening,8787.000000,0.024270
+classical,Van't Kruijs Opening,8677.000000,0.023966
+classical,Caro-Kann Defense,8522.000000,0.023538
+classical,Four Knights Game,8467.000000,0.023386
+classical,Scotch Game,7819.000000,0.021596
+classical,Russian Game,6418.000000,0.017727
+classical,Nimzowitsch Defense,6101.000000,0.016851
+classical,Queen's Gambit Accepted,4804.000000,0.013269
+classical,Vienna Game,4794.000000,0.013241
+classical,Queen's Gambit Declined,4708.000000,0.013004
+classical,Center Game,4683.000000,0.012935
+classical,Pirc Defense,4629.000000,0.012785
+classical,King's Knight Opening,4618.000000,0.012755
+classical,Alekhine Defense,4528.000000,0.012507
+classical,Indian Game,4507.000000,0.012449
+classical,Modern Defense,4178.000000,0.011540
+classical,Queen's Gambit Refused,4106.000000,0.011341
+classical,Horwitz Defense,4084.000000,0.011280
+classical,Zukertort Opening,3955.000000,0.010924
+classical,Hungarian Opening,3603.000000,0.009952
+classical,Three Knights Opening,3218.000000,0.008888
+classical,Slav Defense,3023.000000,0.008350
+classical,Owen Defense,2819.000000,0.007786
+classical,King's Gambit Accepted,2515.000000,0.006947
+classical,Queen's Pawn,2335.000000,0.006449
+classical,Nimzo-Larsen Attack,2251.000000,0.006217
+classical,Petrov's Defense,2146.000000,0.005927
+classical,Ponziani Opening,1739.000000,0.004803
+classical,Bird Opening,1653.000000,0.004566
+classical,Van Geet Opening,1646.000000,0.004546
+classical,Rat Defense,1514.000000,0.004182
+classical,Giuoco Piano,1511.000000,0.004173
+classical,King's Indian Defense,1465.000000,0.004046
+classical,Elephant Gambit,1445.000000,0.003991
+classical,Mikenas Defense,1304.000000,0.003602
+classical,Grob Opening,1238.000000,0.003419
+classical,Mieses Opening,1225.000000,0.003384
+classical,Dutch Defense,1179.000000,0.003256
+classical,Nimzo-Indian Defense,1166.000000,0.003221
+classical,St. George Defense,1053.000000,0.002908
+classical,Saragossa Opening,1051.000000,0.002903
+classical,Englund Gambit Declined,1035.000000,0.002859
+classical,English Defense,987.000000,0.002726
+classical,Blackmar-Diemer Gambit,982.000000,0.002712
+classical,Reti Opening,972.000000,0.002685
+classical,Robatsch (Modern) Defense,940.000000,0.002596
+classical,Semi-Slav Defense,938.000000,0.002591
+classical,Polish Opening,926.000000,0.002558
+classical,Benoni Defense,923.000000,0.002549
+classical,King's Gambit Declined,904.000000,0.002497
+classical,King's Gambit,867.000000,0.002395
+classical,King's Indian Attack,803.000000,0.002218
+classical,Kadas Opening,682.000000,0.001884
+classical,Ware Opening,667.000000,0.001842
+classical,Old Benoni Defense,654.000000,0.001806
+classical,Englund Gambit,605.000000,0.001671
+classical,Danish Gambit,598.000000,0.001652
+classical,King's Pawn Opening,587.000000,0.001621
+classical,Trompowsky Attack,562.000000,0.001552
+classical,Old Indian Defense,551.000000,0.001522
+classical,Portuguese Opening,541.000000,0.001494
+classical,Colle System,507.000000,0.001400
+classical,Torre Attack,465.000000,0.001284
+classical,Gunderam Defense,449.000000,0.001240
+classical,Borg Defense,439.000000,0.001213
+classical,Queen's Gambit,433.000000,0.001196
+classical,Danish Gambit Accepted,419.000000,0.001157
+classical,Goldsmith Defense,416.000000,0.001149
+classical,Ware Defense,401.000000,0.001108
+classical,Amazon Attack,391.000000,0.001080
+classical,Richter-Veresov Attack,375.000000,0.001036
+classical,Gruenfeld Defense,361.000000,0.000997
+classical,Queen's Pawn Opening,356.000000,0.000983
+classical,Anderssen Opening,350.000000,0.000967
+classical,Englund Gambit Complex,334.000000,0.000923
+classical,Duras Gambit,279.000000,0.000771
+classical,Gedult's Opening,276.000000,0.000762
+classical,Barnes Defense,265.000000,0.000732
+classical,Latvian Gambit,252.000000,0.000696
+classical,Clemenz Opening,248.000000,0.000685
+classical,Tarrasch Defense,247.000000,0.000682
+classical,Franco-Benoni Defense,235.000000,0.000649
+classical,King's Pawn,234.000000,0.000646
+classical,Polish Defense,232.000000,0.000641
+classical,East Indian Defense,222.000000,0.000613
+classical,Latvian Gambit Accepted,218.000000,0.000602
+classical,Budapest Defense,217.000000,0.000599
+classical,Paleface Attack,204.000000,0.000563
+classical,Queen's Indian Defense,198.000000,0.000547
+classical,Petrov,176.000000,0.000486
+classical,Amar Opening,170.000000,0.000470
+classical,Kangaroo Defense,167.000000,0.000461
+classical,Carr Defense,158.000000,0.000436
+classical,Sodium Attack,140.000000,0.000387
+classical,Nimzowitsch-Larsen Attack,138.000000,0.000381
+classical,Yusupov-Rubinstein System,135.000000,0.000373
+classical,London System,129.000000,0.000356
+classical,Englund Gambit Complex Declined,125.000000,0.000345
+classical,Barnes Opening,116.000000,0.000320
+classical,Mexican Defense,114.000000,0.000315
+classical,Hippopotamus Defense,113.000000,0.000312
+classical,Creepy Crawly Formation,110.000000,0.000304
+classical,Catalan Opening,105.000000,0.000290
+classical,Queen's Indian Accelerated,102.000000,0.000282
+classical,Slav Indian,89.000000,0.000246
+classical,Canard Opening,88.000000,0.000243
+classical,Bogo-Indian Defense,85.000000,0.000235
+classical,Blackmar-Diemer Gambit Declined,82.000000,0.000226
+classical,Czech Defense,82.000000,0.000226
+classical,Benko Gambit,80.000000,0.000221
+classical,Center Game Accepted,80.000000,0.000221
+classical,Blumenfeld Countergambit,79.000000,0.000218
+classical,Lemming Defense,76.000000,0.000210
+classical,Global Opening,73.000000,0.000202
+classical,Lion Defense,62.000000,0.000171
+classical,Crab Opening,59.000000,0.000163
+classical,Danish Gambit Declined,59.000000,0.000163
+classical,Wade Defense,57.000000,0.000157
+classical,Semi-Bononi,50.000000,0.000138
+classical,Neo-Gruenfeld Defense,46.000000,0.000127
+classical,Australian Defense,43.000000,0.000119
+classical,Unknown,42.000000,0.000116
+classical,Old Indian,37.000000,0.000102
+classical,Benko Gambit Accepted,34.000000,0.000094
+classical,Guatemala Defense,33.000000,0.000091
+classical,Pterodactyl Defense,32.000000,0.000088
+classical,System,30.000000,0.000083
+classical,Blackmar-Diemer,28.000000,0.000077
+classical,Irish Gambit,24.000000,0.000066
+classical,Scotch Gambit,21.000000,0.000058
+classical,Lasker Simul Special,18.000000,0.000050
+classical,Montevideo Defense,17.000000,0.000047
+classical,Valencia Opening,17.000000,0.000047
+classical,Rubinstein Opening,15.000000,0.000041
+classical,Robatsch Defense,14.000000,0.000039
+classical,Zukertort Defense,13.000000,0.000036
+classical,English Orangutan,11.000000,0.000030
+classical,Doery Defense,10.000000,0.000028
+classical,Benko Gambit Declined,8.000000,0.000022
+classical,King's Indian,8.000000,0.000022
+classical,Ruy Lopez Defense,8.000000,0.000022
+classical,Semi-Slav Defense Accepted,6.000000,0.000017
+classical,Borg Opening,5.000000,0.000014
+classical,Bronstein Gambit,4.000000,0.000011
+classical,Blumenfeld Countergambit Accepted,3.000000,0.000008
+classical,English Rat,3.000000,0.000008
+classical,Tayler Opening,2.000000,0.000006
+classical,Vulture Defense,2.000000,0.000006
+classical,Boden-Kieseritzky Gambit,1.000000,0.000003
+classical,Four Knights,1.000000,0.000003
+classical,Norwegian Defense,1.000000,0.000003
+classical,Zaire Defense,1.000000,0.000003
+correspondence,Sicilian Defense,7110.000000,0.088730
+correspondence,Queen's Pawn Game,5743.000000,0.071670
+correspondence,King's Pawn Game,5265.000000,0.065705
+correspondence,French Defense,4009.000000,0.050031
+correspondence,Scandinavian Defense,2899.000000,0.036178
+correspondence,English Opening,2743.000000,0.034231
+correspondence,Ruy Lopez,2600.000000,0.032447
+correspondence,Van't Kruijs Opening,2510.000000,0.031324
+correspondence,Philidor Defense,2333.000000,0.029115
+correspondence,Italian Game,2302.000000,0.028728
+correspondence,Caro-Kann Defense,1793.000000,0.022376
+correspondence,Bishop's Opening,1497.000000,0.018682
+correspondence,Zukertort Opening,1478.000000,0.018445
+correspondence,Alekhine Defense,1427.000000,0.017808
+correspondence,Four Knights Game,1389.000000,0.017334
+correspondence,Scotch Game,1286.000000,0.016049
+correspondence,Nimzowitsch Defense,1265.000000,0.015787
+correspondence,Unknown,1213.000000,0.015138
+correspondence,Hungarian Opening,1092.000000,0.013628
+correspondence,King's Knight Opening,1091.000000,0.013615
+correspondence,Vienna Game,1079.000000,0.013465
+correspondence,Russian Game,1024.000000,0.012779
+correspondence,Indian Game,1020.000000,0.012729
+correspondence,King's Pawn,994.000000,0.012405
+correspondence,Queen's Gambit Declined,950.000000,0.011856
+correspondence,Pirc Defense,921.000000,0.011494
+correspondence,Van Geet Opening,891.000000,0.011119
+correspondence,Center Game,856.000000,0.010683
+correspondence,Modern Defense,847.000000,0.010570
+correspondence,Queen's Pawn,844.000000,0.010533
+correspondence,Queen's Gambit Accepted,826.000000,0.010308
+correspondence,Nimzo-Larsen Attack,819.000000,0.010221
+correspondence,Queen's Gambit Refused,803.000000,0.010021
+correspondence,Mieses Opening,784.000000,0.009784
+correspondence,Horwitz Defense,737.000000,0.009197
+correspondence,Bird Opening,727.000000,0.009073
+correspondence,Slav Defense,588.000000,0.007338
+correspondence,Dutch Defense,532.000000,0.006639
+correspondence,Three Knights Opening,524.000000,0.006539
+correspondence,Owen Defense,510.000000,0.006365
+correspondence,Mikenas Defense,498.000000,0.006215
+correspondence,Polish Opening,493.000000,0.006152
+correspondence,Reti Opening,474.000000,0.005915
+correspondence,King's Gambit Accepted,472.000000,0.005890
+correspondence,Kadas Opening,467.000000,0.005828
+correspondence,Grob Opening,449.000000,0.005603
+correspondence,King's Indian Defense,443.000000,0.005528
+correspondence,Ware Opening,400.000000,0.004992
+correspondence,Nimzo-Indian Defense,379.000000,0.004730
+correspondence,Saragossa Opening,369.000000,0.004605
+correspondence,Blackmar-Diemer Gambit,336.000000,0.004193
+correspondence,Petrov's Defense,333.000000,0.004156
+correspondence,Elephant Gambit,285.000000,0.003557
+correspondence,Ponziani Opening,269.000000,0.003357
+correspondence,Benoni Defense,253.000000,0.003157
+correspondence,English Defense,245.000000,0.003057
+correspondence,King's Indian Attack,240.000000,0.002995
+correspondence,Giuoco Piano,225.000000,0.002808
+correspondence,Borg Defense,216.000000,0.002696
+correspondence,Semi-Slav Defense,209.000000,0.002608
+correspondence,Englund Gambit Declined,204.000000,0.002546
+correspondence,King's Gambit Declined,200.000000,0.002496
+correspondence,King's Gambit,196.000000,0.002446
+correspondence,Rat Defense,193.000000,0.002409
+correspondence,Englund Gambit,187.000000,0.002334
+correspondence,Amar Opening,177.000000,0.002209
+correspondence,King's Pawn Opening,174.000000,0.002171
+correspondence,Trompowsky Attack,170.000000,0.002122
+correspondence,Ware Defense,164.000000,0.002047
+correspondence,Gruenfeld Defense,160.000000,0.001997
+correspondence,Torre Attack,157.000000,0.001959
+correspondence,Old Benoni Defense,150.000000,0.001872
+correspondence,Goldsmith Defense,145.000000,0.001810
+correspondence,Portuguese Opening,144.000000,0.001797
+correspondence,Gedult's Opening,141.000000,0.001760
+correspondence,Robatsch (Modern) Defense,141.000000,0.001760
+correspondence,Sodium Attack,121.000000,0.001510
+correspondence,St. George Defense,113.000000,0.001410
+correspondence,Colle System,111.000000,0.001385
+correspondence,Clemenz Opening,110.000000,0.001373
+correspondence,Amazon Attack,101.000000,0.001260
+correspondence,Barnes Defense,101.000000,0.001260
+correspondence,Duras Gambit,99.000000,0.001235
+correspondence,East Indian Defense,94.000000,0.001173
+correspondence,Queen's Gambit,92.000000,0.001148
+correspondence,Old Indian Defense,87.000000,0.001086
+correspondence,Queen's Indian Defense,86.000000,0.001073
+correspondence,Anderssen Opening,85.000000,0.001061
+correspondence,Gunderam Defense,85.000000,0.001061
+correspondence,Polish Defense,78.000000,0.000973
+correspondence,Queen's Pawn Opening,74.000000,0.000923
+correspondence,Englund Gambit Complex,73.000000,0.000911
+correspondence,Danish Gambit,70.000000,0.000874
+correspondence,Richter-Veresov Attack,69.000000,0.000861
+correspondence,Catalan Opening,60.000000,0.000749
+correspondence,Latvian Gambit,59.000000,0.000736
+correspondence,Hippopotamus Defense,55.000000,0.000686
+correspondence,Kangaroo Defense,53.000000,0.000661
+correspondence,Latvian Gambit Accepted,50.000000,0.000624
+correspondence,London System,49.000000,0.000611
+correspondence,Budapest Defense,45.000000,0.000562
+correspondence,Lemming Defense,45.000000,0.000562
+correspondence,Carr Defense,44.000000,0.000549
+correspondence,Tarrasch Defense,44.000000,0.000549
+correspondence,Czech Defense,43.000000,0.000537
+correspondence,Benko Gambit Accepted,39.000000,0.000487
+correspondence,Barnes Opening,37.000000,0.000462
+correspondence,Neo-Gruenfeld Defense,37.000000,0.000462
+correspondence,Yusupov-Rubinstein System,36.000000,0.000449
+correspondence,Benko Gambit,35.000000,0.000437
+correspondence,Bogo-Indian Defense,35.000000,0.000437
+correspondence,Center Game Accepted,35.000000,0.000437
+correspondence,Danish Gambit Accepted,33.000000,0.000412
+correspondence,Franco-Benoni Defense,33.000000,0.000412
+correspondence,Mexican Defense,33.000000,0.000412
+correspondence,Paleface Attack,33.000000,0.000412
+correspondence,Blackmar-Diemer Gambit Declined,32.000000,0.000399
+correspondence,Nimzowitsch-Larsen Attack,31.000000,0.000387
+correspondence,Canard Opening,30.000000,0.000374
+correspondence,Crab Opening,27.000000,0.000337
+correspondence,System,27.000000,0.000337
+correspondence,Danish Gambit Declined,26.000000,0.000324
+correspondence,Australian Defense,25.000000,0.000312
+correspondence,Blumenfeld Countergambit,23.000000,0.000287
+correspondence,Englund Gambit Complex Declined,22.000000,0.000275
+correspondence,Lion Defense,19.000000,0.000237
+correspondence,Pterodactyl Defense,19.000000,0.000237
+correspondence,Petrov,17.000000,0.000212
+correspondence,Slav Indian,17.000000,0.000212
+correspondence,Guatemala Defense,13.000000,0.000162
+correspondence,Lasker Simul Special,13.000000,0.000162
+correspondence,Creepy Crawly Formation,12.000000,0.000150
+correspondence,Old Indian,11.000000,0.000137
+correspondence,Queen's Indian Accelerated,11.000000,0.000137
+correspondence,Benko Gambit Declined,10.000000,0.000125
+correspondence,Semi-Bononi,10.000000,0.000125
+correspondence,Rubinstein Opening,9.000000,0.000112
+correspondence,Wade Defense,9.000000,0.000112
+correspondence,Blackmar-Diemer,7.000000,0.000087
+correspondence,Global Opening,5.000000,0.000062
+correspondence,King's Indian,5.000000,0.000062
+correspondence,Montevideo Defense,5.000000,0.000062
+correspondence,Scotch Gambit,5.000000,0.000062
+correspondence,English Orangutan,4.000000,0.000050
+correspondence,Irish Gambit,4.000000,0.000050
+correspondence,Borg Opening,3.000000,0.000037
+correspondence,Bronstein Gambit,2.000000,0.000025
+correspondence,Doery Defense,2.000000,0.000025
+correspondence,Robatsch Defense,2.000000,0.000025
+correspondence,Tayler Opening,2.000000,0.000025
+correspondence,Valencia Opening,2.000000,0.000025
+correspondence,Vulture Defense,2.000000,0.000025
+correspondence,Zukertort Defense,2.000000,0.000025
+correspondence,Blumenfeld Countergambit Accepted,1.000000,0.000012
+correspondence,Four Knights,1.000000,0.000012
+correspondence,Ruy Lopez Defense,1.000000,0.000012
+correspondence,Semi-Slav Defense Accepted,1.000000,0.000012
+correspondence,Venezolana Opening,1.000000,0.000012
+rapid,Sicilian Defense,482728.000000,0.106638
+rapid,Queen's Pawn Game,306754.000000,0.067764
+rapid,King's Pawn Game,296699.000000,0.065543
+rapid,French Defense,285788.000000,0.063133
+rapid,Philidor Defense,220954.000000,0.048810
+rapid,Italian Game,216493.000000,0.047825
+rapid,Scandinavian Defense,198965.000000,0.043953
+rapid,Ruy Lopez,158973.000000,0.035118
+rapid,Bishop's Opening,137986.000000,0.030482
+rapid,English Opening,121305.000000,0.026797
+rapid,Caro-Kann Defense,106499.000000,0.023526
+rapid,Scotch Game,95690.000000,0.021139
+rapid,Van't Kruijs Opening,87762.000000,0.019387
+rapid,Four Knights Game,75470.000000,0.016672
+rapid,Modern Defense,68133.000000,0.015051
+rapid,Nimzowitsch Defense,66711.000000,0.014737
+rapid,Queen's Gambit Declined,65143.000000,0.014391
+rapid,Queen's Gambit Accepted,64022.000000,0.014143
+rapid,Russian Game,61429.000000,0.013570
+rapid,Pirc Defense,57112.000000,0.012616
+rapid,King's Gambit Accepted,56722.000000,0.012530
+rapid,Horwitz Defense,55922.000000,0.012354
+rapid,Indian Game,55766.000000,0.012319
+rapid,Center Game,54941.000000,0.012137
+rapid,Vienna Game,52074.000000,0.011504
+rapid,Zukertort Opening,50792.000000,0.011220
+rapid,Queen's Gambit Refused,50202.000000,0.011090
+rapid,Owen Defense,49974.000000,0.011040
+rapid,Hungarian Opening,48975.000000,0.010819
+rapid,Alekhine Defense,43666.000000,0.009646
+rapid,Slav Defense,42157.000000,0.009313
+rapid,King's Knight Opening,41986.000000,0.009275
+rapid,Three Knights Opening,32599.000000,0.007201
+rapid,Nimzo-Larsen Attack,30340.000000,0.006702
+rapid,Queen's Pawn,28952.000000,0.006396
+rapid,Bird Opening,28860.000000,0.006375
+rapid,Polish Opening,24509.000000,0.005414
+rapid,King's Indian Defense,22591.000000,0.004991
+rapid,Petrov's Defense,22487.000000,0.004968
+rapid,Rat Defense,21753.000000,0.004805
+rapid,King's Gambit,18854.000000,0.004165
+rapid,Ponziani Opening,18713.000000,0.004134
+rapid,Robatsch (Modern) Defense,18697.000000,0.004130
+rapid,Giuoco Piano,18694.000000,0.004130
+rapid,King's Gambit Declined,18093.000000,0.003997
+rapid,Nimzo-Indian Defense,17792.000000,0.003930
+rapid,English Defense,17203.000000,0.003800
+rapid,Dutch Defense,17041.000000,0.003764
+rapid,Elephant Gambit,16656.000000,0.003679
+rapid,Van Geet Opening,16245.000000,0.003589
+rapid,Semi-Slav Defense,16065.000000,0.003549
+rapid,Benoni Defense,14819.000000,0.003274
+rapid,Mieses Opening,14342.000000,0.003168
+rapid,St. George Defense,13503.000000,0.002983
+rapid,Grob Opening,12586.000000,0.002780
+rapid,Reti Opening,12498.000000,0.002761
+rapid,Unknown,11369.000000,0.002511
+rapid,Danish Gambit,11021.000000,0.002435
+rapid,Old Benoni Defense,10783.000000,0.002382
+rapid,Blackmar-Diemer Gambit,10698.000000,0.002363
+rapid,Mikenas Defense,10379.000000,0.002293
+rapid,Saragossa Opening,10210.000000,0.002255
+rapid,Englund Gambit Declined,9797.000000,0.002164
+rapid,King's Indian Attack,9252.000000,0.002044
+rapid,Old Indian Defense,7754.000000,0.001713
+rapid,Englund Gambit,7495.000000,0.001656
+rapid,King's Pawn,7275.000000,0.001607
+rapid,Trompowsky Attack,6950.000000,0.001535
+rapid,Colle System,6574.000000,0.001452
+rapid,King's Pawn Opening,6330.000000,0.001398
+rapid,Danish Gambit Accepted,6279.000000,0.001387
+rapid,Torre Attack,6190.000000,0.001367
+rapid,Gruenfeld Defense,5824.000000,0.001287
+rapid,Englund Gambit Complex,5713.000000,0.001262
+rapid,Kadas Opening,5307.000000,0.001172
+rapid,Queen's Gambit,4541.000000,0.001003
+rapid,Borg Defense,4257.000000,0.000940
+rapid,Franco-Benoni Defense,4148.000000,0.000916
+rapid,Duras Gambit,4096.000000,0.000905
+rapid,Ware Opening,3870.000000,0.000855
+rapid,Gunderam Defense,3723.000000,0.000822
+rapid,Richter-Veresov Attack,3702.000000,0.000818
+rapid,Clemenz Opening,3619.000000,0.000799
+rapid,Portuguese Opening,3463.000000,0.000765
+rapid,Tarrasch Defense,3446.000000,0.000761
+rapid,Goldsmith Defense,3374.000000,0.000745
+rapid,Budapest Defense,3206.000000,0.000708
+rapid,Latvian Gambit,3178.000000,0.000702
+rapid,Ware Defense,3109.000000,0.000687
+rapid,Amazon Attack,3107.000000,0.000686
+rapid,Barnes Defense,3023.000000,0.000668
+rapid,Anderssen Opening,2972.000000,0.000657
+rapid,Latvian Gambit Accepted,2946.000000,0.000651
+rapid,Queen's Pawn Opening,2699.000000,0.000596
+rapid,East Indian Defense,2620.000000,0.000579
+rapid,Queen's Indian Defense,2571.000000,0.000568
+rapid,Polish Defense,2383.000000,0.000526
+rapid,Carr Defense,2303.000000,0.000509
+rapid,Petrov,2291.000000,0.000506
+rapid,Englund Gambit Complex Declined,2260.000000,0.000499
+rapid,Kangaroo Defense,2061.000000,0.000455
+rapid,Gedult's Opening,2036.000000,0.000450
+rapid,Paleface Attack,1937.000000,0.000428
+rapid,Yusupov-Rubinstein System,1775.000000,0.000392
+rapid,London System,1743.000000,0.000385
+rapid,Canard Opening,1505.000000,0.000332
+rapid,Catalan Opening,1415.000000,0.000313
+rapid,Benko Gambit,1395.000000,0.000308
+rapid,Slav Indian,1324.000000,0.000292
+rapid,Amar Opening,1282.000000,0.000283
+rapid,Nimzowitsch-Larsen Attack,1280.000000,0.000283
+rapid,Czech Defense,1236.000000,0.000273
+rapid,Blumenfeld Countergambit,1092.000000,0.000241
+rapid,Mexican Defense,1041.000000,0.000230
+rapid,Bogo-Indian Defense,1039.000000,0.000230
+rapid,Blackmar-Diemer Gambit Declined,904.000000,0.000200
+rapid,Barnes Opening,888.000000,0.000196
+rapid,Benko Gambit Accepted,876.000000,0.000194
+rapid,Creepy Crawly Formation,829.000000,0.000183
+rapid,Neo-Gruenfeld Defense,815.000000,0.000180
+rapid,Danish Gambit Declined,812.000000,0.000179
+rapid,Lion Defense,793.000000,0.000175
+rapid,Old Indian,718.000000,0.000159
+rapid,Guatemala Defense,710.000000,0.000157
+rapid,Queen's Indian Accelerated,707.000000,0.000156
+rapid,Pterodactyl Defense,695.000000,0.000154
+rapid,Center Game Accepted,676.000000,0.000149
+rapid,Wade Defense,634.000000,0.000140
+rapid,Sodium Attack,625.000000,0.000138
+rapid,Hippopotamus Defense,624.000000,0.000138
+rapid,Semi-Bononi,610.000000,0.000135
+rapid,Global Opening,541.000000,0.000120
+rapid,System,508.000000,0.000112
+rapid,Crab Opening,421.000000,0.000093
+rapid,Scotch Gambit,408.000000,0.000090
+rapid,Lemming Defense,402.000000,0.000089
+rapid,Robatsch Defense,277.000000,0.000061
+rapid,Lasker Simul Special,272.000000,0.000060
+rapid,Rubinstein Opening,232.000000,0.000051
+rapid,Australian Defense,227.000000,0.000050
+rapid,Benko Gambit Declined,170.000000,0.000038
+rapid,English Orangutan,163.000000,0.000036
+rapid,Montevideo Defense,162.000000,0.000036
+rapid,Blackmar-Diemer,160.000000,0.000035
+rapid,Irish Gambit,152.000000,0.000034
+rapid,Valencia Opening,147.000000,0.000032
+rapid,Semi-Slav Defense Accepted,111.000000,0.000025
+rapid,King's Indian,100.000000,0.000022
+rapid,Doery Defense,89.000000,0.000020
+rapid,Zukertort Defense,75.000000,0.000017
+rapid,Ruy Lopez Defense,47.000000,0.000010
+rapid,Bronstein Gambit,45.000000,0.000010
+rapid,Borg Opening,42.000000,0.000009
+rapid,Vulture Defense,36.000000,0.000008
+rapid,Tayler Opening,31.000000,0.000007
+rapid,Four Knights,14.000000,0.000003
+rapid,English Rat,13.000000,0.000003
+rapid,Amsterdam Attack,11.000000,0.000002
+rapid,Zaire Defense,10.000000,0.000002
+rapid,Boden-Kieseritzky Gambit,9.000000,0.000002
+rapid,Marienbad System,9.000000,0.000002
+rapid,Norwegian Defense,9.000000,0.000002
+rapid,Blumenfeld Countergambit Accepted,8.000000,0.000002
+rapid,Formation,6.000000,0.000001
+rapid,Spanish Opening,3.000000,0.000001
+rapid,Dresden Opening,1.000000,0.000000
+rapid,Queen's Indian,1.000000,0.000000
+rapid,Venezolana Opening,1.000000,0.000000
+rapid,Veresov Opening,1.000000,0.000000

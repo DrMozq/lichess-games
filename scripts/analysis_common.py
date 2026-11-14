@@ -1,16 +1,16 @@
-"""Общие функции анализов задач 3–4: потоковое чтение, качество данных, графики.
+"""Общие функции анализов задач 1–4: потоковое чтение, качество данных, графики.
 
 Используются только стандартная библиотека и зависимости requirements.txt.
 """
 
 import argparse
-from collections import Counter
-from contextlib import closing
 import glob
 import json
-from pathlib import Path
 import sqlite3
 import tempfile
+from collections import Counter
+from contextlib import closing
+from pathlib import Path
 
 import matplotlib
 
@@ -18,6 +18,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from numpy.typing import ArrayLike
 
 SPEEDS = ("blitz", "rapid", "classical")
 ALL_SPEEDS = ("ultrabullet", "bullet", "blitz", "rapid", "classical", "correspondence")
@@ -48,6 +49,10 @@ QUALITY_LABELS = {
     "valid_player_games": "Наблюдений игрок–партия с пригодными метриками и рейтингом",
     "invalid_eval_player_games": "Наблюдений с has_eval = 1, но непригодными метриками",
     "unrated_eval_player_games": "Наблюдений с метриками, но без корректного рейтинга",
+    "games_outside_periods": "Партий в периодах меньше порога (пограничные даты)",
+    "periods": "Периодов в анализе",
+    "rated_games": "Партий с рейтингами обоих игроков",
+    "outside_diff_limit": "Партий с разницей рейтингов за пределом анализа",
 }
 
 
@@ -135,49 +140,51 @@ def iter_chunks(paths, extra_columns, args, quality, relabel=None):
         if missing:
             raise ValueError(f"{path.name}: нет колонок {', '.join(sorted(missing))}. "
                              "Получите CSV текущим scripts/parse_pgn.py.")
-    with tempfile.TemporaryDirectory(prefix="lichess-dedup-") as tmp:
-        with closing(sqlite3.connect(str(Path(tmp) / "seen.sqlite"))) as conn:
-            conn.execute("CREATE TABLE seen (id TEXT PRIMARY KEY) WITHOUT ROWID")
-            conn.execute("CREATE TABLE batch (id TEXT)")
-            for path in paths:
-                for frame in pd.read_csv(path, usecols=columns, dtype=str,
-                                         keep_default_na=False, chunksize=args.chunksize):
-                    quality["input_rows"] += len(frame)
-                    ids = frame["game_id"].str.strip()
-                    quality["missing_id"] += int(ids.eq("").sum())
-                    frame = frame.loc[ids.ne("")].copy()
-                    frame["game_id"] = ids.loc[frame.index]
-                    completed = frame["result"].isin(RESULTS)
-                    quality["unfinished_or_invalid_result"] += int((~completed).sum())
-                    frame = frame.loc[completed].copy()
-                    unique = _first_occurrences(conn, frame["game_id"])
-                    quality["duplicate_games"] += int((~unique).sum())
-                    frame = frame.loc[unique].copy()
-                    quality["unique_completed"] += len(frame)
-                    computed = classify_speed(frame["base_sec"], frame["inc_sec"])
-                    declared = frame["speed"].str.strip().str.lower()
-                    computed = computed.mask(computed.eq("unknown") & declared.eq("correspondence"), "correspondence")
-                    known = computed.ne("unknown") & declared.ne("")
-                    quality["speed_mismatches"] += int((known & computed.ne(declared)).sum())
-                    if relabel is not None:
-                        relabel.update(zip(declared.replace("", "unknown"), computed))
-                    quality["unknown_time_control"] += int(computed.eq("unknown").sum())
-                    frame["speed"] = computed if args.speed_source == "time_control" else declared
-                    selected = frame["speed"].isin(getattr(args, "speeds", SPEEDS))
-                    quality["outside_selected_speeds"] += int((~selected).sum())
-                    frame = frame.loc[selected].copy()
-                    quality["selected_games"] += len(frame)
-                    if frame.empty:
-                        continue
-                    dates = pd.to_datetime(frame["utc_date"], format="%Y-%m-%d", errors="coerce")
-                    frame["month"] = dates.dt.strftime("%Y-%m").fillna("unknown")
-                    quality["unknown_date"] += int(dates.isna().sum())
-                    for column in ("n_plies", "white_elo", "black_elo"):
-                        frame[column] = nonnegative_integer(frame[column], positive=column != "n_plies")
-                        quality[f"invalid_{column}"] += int(frame[column].isna().sum())
-                    frame["has_eval"] = pd.to_numeric(frame["has_eval"], errors="coerce").eq(1)
-                    quality["games_with_eval"] += int(frame["has_eval"].sum())
-                    yield frame
+    with (
+        tempfile.TemporaryDirectory(prefix="lichess-dedup-") as tmp,
+        closing(sqlite3.connect(str(Path(tmp) / "seen.sqlite"))) as conn,
+    ):
+        conn.execute("CREATE TABLE seen (id TEXT PRIMARY KEY) WITHOUT ROWID")
+        conn.execute("CREATE TABLE batch (id TEXT)")
+        for path in paths:
+            for frame in pd.read_csv(path, usecols=columns, dtype=str,
+                                     keep_default_na=False, chunksize=args.chunksize):
+                quality["input_rows"] += len(frame)
+                ids = frame["game_id"].str.strip()
+                quality["missing_id"] += int(ids.eq("").sum())
+                frame = frame.loc[ids.ne("")].copy()
+                frame["game_id"] = ids.loc[frame.index]
+                completed = frame["result"].isin(RESULTS)
+                quality["unfinished_or_invalid_result"] += int((~completed).sum())
+                frame = frame.loc[completed].copy()
+                unique = _first_occurrences(conn, frame["game_id"])
+                quality["duplicate_games"] += int((~unique).sum())
+                frame = frame.loc[unique].copy()
+                quality["unique_completed"] += len(frame)
+                computed = classify_speed(frame["base_sec"], frame["inc_sec"])
+                declared = frame["speed"].str.strip().str.lower()
+                computed = computed.mask(computed.eq("unknown") & declared.eq("correspondence"), "correspondence")
+                known = computed.ne("unknown") & declared.ne("")
+                quality["speed_mismatches"] += int((known & computed.ne(declared)).sum())
+                if relabel is not None:
+                    relabel.update(zip(declared.replace("", "unknown"), computed))
+                quality["unknown_time_control"] += int(computed.eq("unknown").sum())
+                frame["speed"] = computed if args.speed_source == "time_control" else declared
+                selected = frame["speed"].isin(getattr(args, "speeds", SPEEDS))
+                quality["outside_selected_speeds"] += int((~selected).sum())
+                frame = frame.loc[selected].copy()
+                quality["selected_games"] += len(frame)
+                if frame.empty:
+                    continue
+                dates = pd.to_datetime(frame["utc_date"], format="%Y-%m-%d", errors="coerce")
+                frame["month"] = dates.dt.strftime("%Y-%m").fillna("unknown")
+                quality["unknown_date"] += int(dates.isna().sum())
+                for column in ("n_plies", "white_elo", "black_elo"):
+                    frame[column] = nonnegative_integer(frame[column], positive=column != "n_plies")
+                    quality[f"invalid_{column}"] += int(frame[column].isna().sum())
+                frame["has_eval"] = pd.to_numeric(frame["has_eval"], errors="coerce").eq(1)
+                quality["games_with_eval"] += int(frame["has_eval"].sum())
+                yield frame
 
 
 def add_grouped(target, frame, keys, values):
@@ -197,16 +204,19 @@ def grouped_frame(target, keys, values):
     return frame
 
 
-def wilson_interval(successes, total, z=1.959964):
+def wilson_interval(successes: ArrayLike, total: ArrayLike,
+                    z: float = 1.959964) -> tuple[np.ndarray, np.ndarray]:
     """95% интервал Уилсона для доли; при total = 0 — NaN."""
-    successes = np.asarray(successes, dtype=float)
-    total = np.asarray(total, dtype=float)
+    k: np.ndarray = np.asarray(successes, dtype=np.float64)
+    n: np.ndarray = np.asarray(total, dtype=np.float64)
     with np.errstate(divide="ignore", invalid="ignore"):
-        p = successes / total
-        denom = 1 + z ** 2 / total
-        center = (p + z ** 2 / (2 * total)) / denom
-        half = z * np.sqrt(p * (1 - p) / total + z ** 2 / (4 * total ** 2)) / denom
-    return center - half, center + half
+        p = np.divide(k, n)
+        denom = np.add(1.0, np.divide(z ** 2, n))
+        center = np.divide(np.add(p, np.divide(z ** 2, np.multiply(2.0, n))), denom)
+        spread = np.add(np.divide(np.multiply(p, np.subtract(1.0, p)), n),
+                        np.divide(z ** 2, np.multiply(4.0, np.square(n))))
+        half = np.divide(np.multiply(z, np.sqrt(spread)), denom)
+    return np.asarray(np.subtract(center, half)), np.asarray(np.add(center, half))
 
 
 def relabel_table(relabel):
@@ -224,11 +234,11 @@ def relabel_lines(table, args):
     if args.speed_source != "time_control":
         return []
     lines = ["## Перекодировка контролей времени", "",
-             "Контроль определяется по современным границам Lichess, а не по метке из PGN. "
+             ("Контроль определяется по современным границам Lichess, а не по метке из PGN. "
              "В ранних дампах метки `rapid` нет, и партии с оценочной длительностью "
              "8–25 минут на игрока помечены там как `classical`; после перекодировки они "
              "попадают в рапид. Метка PGN сохраняется только для переписки (`correspondence`). "
-             "Ниже — все расхождения метки и расчёта в этих данных.", ""]
+             "Ниже — все расхождения метки и расчёта в этих данных."), ""]
     moved = table.loc[table["relabeled"]]
     if moved.empty:
         return lines + ["Расхождений исходных меток и расчёта нет.", ""]
@@ -238,8 +248,59 @@ def relabel_lines(table, args):
     view["computed_speed"] = view["computed_speed"].map(lambda s: LABELS.get(s, s))
     view.columns = ["Метка в PGN", "Контроль по времени", "Партий", "% от метки"]
     return lines + [md_table(view), "",
-                    "Полная таблица переходов — `speed_relabel.csv`. "
-                    "Для анализа по исходным меткам запустите скрипт с `--speed-source event`.", ""]
+                    ("Полная таблица переходов — `speed_relabel.csv`. "
+                    "Для анализа по исходным меткам запустите скрипт с `--speed-source event`."), ""]
+
+
+def opening_family(opening: pd.Series) -> pd.Series:
+    """'Sicilian Defense: Najdorf' / 'Philidor Defense #3' / 'X, Y' -> 'Sicilian Defense' / ...
+
+    Семейство — часть названия до двоеточия и запятой, без номера вида «#3».
+    Пустое название или «?» -> 'Unknown'.
+    """
+    family = (opening.fillna("").astype(str).str.split(":", n=1).str[0]
+              .str.split(",", n=1).str[0].str.replace(r"\s*#\d+$", "", regex=True).str.strip())
+    return family.mask(family.isin(["", "?"]), "Unknown")
+
+
+def eco_group(eco: pd.Series) -> pd.Series:
+    """Код ECO -> буква A–E; всё остальное -> '?'."""
+    letter = eco.fillna("").astype(str).str.strip().str[:1].str.upper()
+    return letter.where(letter.isin(list("ABCDE")), "?")
+
+
+ECO_LABELS = {"A": "A — фланговые и прочие", "B": "B — полуоткрытые (кроме французской)",
+              "C": "C — открытые и французская", "D": "D — закрытые и полузакрытые",
+              "E": "E — индийские защиты", "?": "без кода ECO"}
+RESULT_SCORE = {"1-0": 1.0, "1/2-1/2": 0.5, "0-1": 0.0}
+
+
+def rating_band(rating: pd.Series, width: int = 200) -> pd.Series:
+    """Нижняя граница рейтинговой группы ширины width; NaN остаётся NaN."""
+    return (rating // width) * width
+
+
+class Accumulator:
+    """Суммирует агрегаты по блокам; хранит только сгруппированные суммы, не партии."""
+
+    def __init__(self) -> None:
+        self.parts: dict[str, list[pd.DataFrame]] = {}
+        self.keys: dict[str, list[str]] = {}
+
+    def add(self, name: str, frame: pd.DataFrame, keys: list[str], values: list[str]) -> None:
+        part = frame.groupby(keys, observed=True, sort=False, dropna=True)[values].sum()
+        self.keys[name] = keys
+        bucket = self.parts.setdefault(name, [])
+        bucket.append(part)
+        if len(bucket) >= 50:  # периодически сворачиваем, чтобы список не рос
+            self.parts[name] = [pd.concat(bucket).groupby(level=list(range(len(keys)))).sum()]
+
+    def result(self, name: str, keys: list[str], values: list[str]) -> pd.DataFrame:
+        parts = self.parts.get(name)
+        if not parts:
+            return pd.DataFrame(columns=keys + values)
+        total = pd.concat(parts).groupby(level=list(range(len(keys)))).sum()
+        return total.reset_index().astype({column: float for column in values})
 
 
 def ratio(numerator, denominator):
@@ -270,8 +331,8 @@ def report_preamble(title, paths, args, quality):
             "Выбранные контроли: " + ", ".join(LABELS[s] for s in getattr(args, "speeds", SPEEDS)) + ". "
             "Анализируются завершённые партии. Повторы game_id "
             "удалены между всеми файлами; сохранена первая завершённая запись.", "",
-            "Месяц определяется по `utc_date`, а не имени дампа: в месячном файле "
-            "могут встречаться партии с датой соседнего месяца.", "",
+            ("Месяц определяется по `utc_date`, а не имени дампа: в месячном файле "
+            "могут встречаться партии с датой соседнего месяца."), "",
             "## Качество данных", "",
             md_table(pd.DataFrame([(QUALITY_LABELS.get(k, k), v) for k, v in quality.items()],
                                   columns=["Показатель", "Число"])), ""]

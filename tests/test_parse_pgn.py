@@ -1,7 +1,13 @@
 """Проверка parse_pgn.py на маленьких примерах.
 
-Запуск из корня проекта: python -m tests.test_parse_pgn
+Запуск: python -m tests.test_parse_pgn (или python tests/test_parse_pgn.py).
 """
+
+import sys
+from pathlib import Path
+
+# Корень проекта в sys.path: тесты запускаются и файлом, и из любой папки.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import scripts.parse_pgn as pp
 

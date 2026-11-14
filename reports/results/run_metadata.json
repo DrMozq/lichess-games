@@ -1,0 +1,65 @@
+{
+  "status": "ok",
+  "inputs": [
+    {
+      "name": "games_2013-01.csv",
+      "bytes": 20931649
+    },
+    {
+      "name": "games_2014-01.csv",
+      "bytes": 129030593
+    },
+    {
+      "name": "games_2015-01.csv",
+      "bytes": 342148774
+    },
+    {
+      "name": "games_2016-01.csv",
+      "bytes": 1047448342
+    },
+    {
+      "name": "games_2017-01.csv",
+      "bytes": 2264097148
+    }
+  ],
+  "parameters": {
+    "out": "reports/results",
+    "chunksize": 100000,
+    "speed_source": "time_control",
+    "speeds": [
+      "ultrabullet",
+      "bullet",
+      "blitz",
+      "rapid",
+      "classical",
+      "correspondence"
+    ],
+    "diff_step": 50,
+    "diff_limit": 600,
+    "min_games": 1000,
+    "top": 25
+  },
+  "quality": {
+    "input_rows": 17767234,
+    "missing_id": 0,
+    "unfinished_or_invalid_result": 1558,
+    "duplicate_games": 0,
+    "unique_completed": 17765676,
+    "speed_mismatches": 4526783,
+    "unknown_time_control": 0,
+    "outside_selected_speeds": 0,
+    "selected_games": 17765676,
+    "unknown_date": 0,
+    "invalid_n_plies": 0,
+    "invalid_white_elo": 148,
+    "invalid_black_elo": 218,
+    "games_with_eval": 2230089,
+    "rated_games": 17765310,
+    "outside_diff_limit": 227582
+  },
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "matplotlib": "3.11.2"
+  }
+}
